@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CustomDao">
+	
+	<select id="customList" resultType="CustomVO" parameterType="map">
+		
+	select *	from 		
+		(SELECT A.*, ROWNUM RNUM FROM
+		(SELECT * FROM custom  where cId like '%'||#{keyWord}||'%'
+			ORDER BY cId desc)A)
+
+		 <![CDATA[
+		 where RNUM >= #{start} AND RNUM <= #{end}		
+		]]>
+	</select>
+	
+	<select id="getCustomInfo" resultType="CustomVO">
+		select * from custom where cSeq = #{cSeq}
+	</select>
+	
+	<delete id="delete">
+		delete from custom where cId = #{cId}
+	</delete>
+	
+	<select id="getCustomCount"  resultType="int" parameterType="map">
+		SELECT COUNT(*) FROM custom	
+			 where cId like '%'||#{keyWord}||'%'
+	</select>
+	
+	
+	
+</mapper>

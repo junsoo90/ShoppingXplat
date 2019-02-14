@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="ProductDao">
+
+<sql id="search">
+		<choose>
+			<when test="keyField == 'all'">
+				WHERE productInfo.title like '%'||#{keyWord}||'%'
+				OR productInfo.name like '%'||#{keyWord}||'%'
+				OR productInfo.content like '%'||#{keyWord}||'%'
+				or pSeq  IN (
+             	SELECT seq from pPhoto
+             	WHERE orgfilename LIKE '%'||#{keyWord}||'%')
+			</when>
+			<when test="keyField == 'orgfilename'">
+			 WHERE pSeq  IN (
+             	SELECT seq from pPhoto
+             	WHERE orgfilename LIKE '%'||#{keyWord}||'%')
+			</when>
+			<when test="keyField == 'title'">
+				where title like '%'||#{keyWord}||'%'
+			</when>
+			<when test="keyField == 'name'">
+				where name like '%'||#{keyWord}||'%'
+			</when>
+			<when test="keyField == 'content'">
+				where content like '%'||#{keyWord}||'%'
+			</when>
+			
+		</choose>
+	</sql>
+
+	<select id="getProductCount" resultType="int" parameterType="map">
+		SELECT COUNT(*) FROM productInfo	
+			 where pName like '%'||#{keyWord}||'%'
+			  and productState = 'sale'
+	</select>
+	
+	<select id="productList" resultType="ProductVO">
+		SELECT * FROM
+		(SELECT A.*, ROWNUM RNUM FROM
+		(SELECT * FROM productInfo where pName like '%'||#{keyWord}||'%'
+		 and productState = 'sale'
+		order by pseq desc)A)
+		<![CDATA[
+		 where RNUM >= #{start} AND RNUM <= #{end}		
+		]]>
+	</select>
+	
+	
+	<select id="pPhotoCount" parameterType="map" resultType="Integer">
+		 SELECT COUNT(*)   
+         FROM productInfo
+         WHERE  and productState = 'sale' and pSeq  IN (
+              SELECT pseq FROM pPhoto
+              WHERE orgfilename LIKE '%${keyWord}%'
+              )
+			
+	</select>
+
+
+	<insert id="productInsert" statementType="CALLABLE" parameterType="ProductVO" >
+		<!-- 
+		{	call productInfo_insert
+				(
+					#{pName},#{pPrice},#{pDetail},#{deliveryCharge}
+				)
+		}
+		-->
+			INSERT INTO productInfo
+			VALUES(pSeq.nextval,#{pName},#{pPrice},#{pDetail},
+			 #{deliveryCharge}, 'sale')
+ 		
+ 		
+	</insert>
+	
+	
+	<insert id="optionInsert" parameterType="OptionVO" >
+
+		INSERT INTO productOption
+		VALUES(#{pSeq},#{pOption},#{optionCnt}, #{optionStock}, 
+		#{optionPrice}, optionSeq.nextval)
+
+	</insert>
+	
+	<insert id="fileInsert" parameterType="PhotoVO">
+		insert into pPhoto
+		values( #{pSeq}, #{orgfilename}, #{savefilename}, 
+				#{filelocation}, #{photoCnt})
+	</insert>
+
+
+	<update id="stepUp" parameterType="ProductVO">
+		UPDATE productInfo SET STEP=STEP+1 
+		WHERE REF=#{ref} and STEP <![CDATA[>]]>
+		#{step}
+	</update>
+
+	<select id="getInfo" parameterType="int" resultType="ProductVO">
+		SELECT *
+		FROM productInfo WHERE pSeq=#{pSeq}
+	</select>
+	
+	<select id="filegetInfo" parameterType="int" resultType="PhotoVO">
+		SELECT *
+		FROM pPhoto WHERE pSEQ=#{seq} order by photoCnt desc
+	</select>
+
+	<update id="addHit" parameterType="int">
+		UPDATE productInfo SET HIT=HIT+1
+		WHERE pSeq=#{seq}
+	</update>
+
+	<delete id="fileDelete" parameterType="PhotoVO">
+		DELETE FROM pPhoto WHERE
+		pSEQ=#{pSeq} and filelocation = #{filelocation}
+		
+	</delete>
+
+	<select id="getMaxSeq" resultType="int">
+		select NVL(max(pSeq),0) maxnum
+			from productInfo
+	</select>
+	
+	<select id="getMaxOptionCnt" resultType="int">
+		select NVL(max(optionCnt),0) maxnum
+			from 
+				productOption where pSeq = #{pSeq}
+	</select>
+
+
+	<update id="updateOk" parameterType="ProductVO">
+		UPDATE productInfo SET
+			pPrice=#{pPrice}, pName=#{pName}, pDetail=#{pDetail}, 
+			DELIVERYCHARGE=#{deliveryCharge}
+		WHERE
+			pSeq=#{pSeq}
+	</update>
+	
+	<update id="producDeleteState" parameterType="int">
+		UPDATE productInfo SET
+				productState = 'delete'
+			WHERE
+				pSeq = #{pSeq}
+	</update>
+	
+	
+	<update id="productCartDeleteState" parameterType="int">
+		UPDATE cart SET
+				productState = 'delete'
+			WHERE
+				pSeq = #{pSeq}
+	</update>
+	
+	
+	
+	<select id="optionInfo" resultType="OptionVO">
+		select * from productOption
+		where pSeq = #{pSeq}
+	</select>
+	
+	<delete id="deleteOption">
+		delete from productOption
+		where pOption = #{pOption}
+	</delete>
+	
+	<delete id="productDelete">
+		delete from productInfo
+			where pseq = #{pSeq}
+	</delete>
+
+	<select id="getPhotoCnt" resultType="int">
+		select count(*) from pPhoto
+			where pSeq = #{pSeq}
+	</select>
+	
+	<select id="productCheck" resultType="int">
+		select count(*) 
+		from 
+			productinfo where pName = #{pName}
+	</select>
+	
+</mapper>
