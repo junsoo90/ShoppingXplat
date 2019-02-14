@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+<web-app xmlns:web="http://xmlns.jcp.org/xml/ns/javaee">
+
+	<servlet>
+		<servlet-name>Controller</servlet-name>
+		<servlet-class>custom.controller.MainController</servlet-class>
+		<init-param>
+			<param-name>propertyConfig</param-name>
+			<param-value>CommandPro.properties</param-value>
+		</init-param>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Controller</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>AjaxController</servlet-name>
+		<servlet-class>custom.controller.AjaxController</servlet-class>
+		<init-param>
+			<param-name>propertyConfig</param-name>
+			<param-value>AjaxCommandPro.properties</param-value>
+		</init-param>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>AjaxController</servlet-name>
+		<url-pattern>*.ajax</url-pattern>
+	</servlet-mapping>
+
+	<filter>
+		<filter-name>UrlRewriteFilter</filter-name>
+		<filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
+	</filter>
+	
+	
+	<filter-mapping>
+		<filter-name>UrlRewriteFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>loginFilter</filter-name>
+		<filter-class>custom.Filter.LoginFilter</filter-class>
+
+	</filter>
+	
+	<filter>
+		<filter-name>LoginCheckFilter</filter-name>
+		<filter-class>custom.Filter.LoginCheckFilter</filter-class>
+
+	</filter>
+
+	<filter-mapping>
+		<filter-name>loginFilter</filter-name>
+		<url-pattern>*.do</url-pattern>
+		<url-pattern>*.ajax</url-pattern>
+	</filter-mapping>
+
+
+
+	<error-page>
+		<exception-type>java.lang.Throwable</exception-type>
+		<location>/views/productEmpty.jsp</location>
+	</error-page>
+	
+	<error-page>
+		<exception-type>java.lang.IllegalArgumentException</exception-type>
+		<location>/views/productEmpty.jsp</location>
+	</error-page>
+	
+	<error-page>
+		<exception-type>java.*</exception-type>
+		<location>/views/productEmpty.jsp</location>
+	</error-page>
+	
+	<error-page>
+		<error-code>404</error-code>
+		<location>/views/productEmpty.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>400</error-code>
+		<location>/views/productEmpty.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>503</error-code>
+		<location>/views/productEmpty.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>405</error-code>
+		<location>/views/productEmpty.jsp</location>
+	</error-page>
+
+	<!-- 
+	<listener>
+		<listener-class>custom.session.SessionListener</listener-class>
+	</listener>
+	 -->
+	
+</web-app>

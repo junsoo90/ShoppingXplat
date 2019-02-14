@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "HTTP://mybatis.org/dtd/mybatis-3-config.dtd">
+
+
+
+<configuration>
+
+	<properties resource="custom/mybatis/mapper/jdbc.properties" />
+	
+	<typeAliases>
+		<typeAlias alias="ProductVO" type="custom.VO.ProductVO" />
+		<typeAlias alias="CustomVO" type="custom.VO.CustomVO" />
+		<typeAlias alias="OrderVO" type="custom.VO.OrderVO" />
+		<typeAlias alias="OptionVO" type="custom.VO.OptionVO" />
+
+		<typeAlias alias="PhotoVO" type="custom.VO.PhotoVO" />
+		<typeAlias alias="CartVO" type="custom.VO.CartVO" />
+		<typeAlias alias="OrderVO" type="custom.VO.OrderVO" />
+	</typeAliases>
+
+	<environments default="mariaDB_test">
+		<environment id="mariaDB_test">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${jdbc.driverClassName}" />
+				<property name="url" value="${jdbc.url}" />
+				<property name="username" value="${jdbc.username}" />
+				<property name="password" value="${jdbc.password}" />
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<mappers>
+		<mapper resource="custom/mybatis/mapper/ProductMapper.xml" />
+		<mapper resource="custom/mybatis/mapper/CustomMapper.xml" />
+		<mapper resource="custom/mybatis/mapper/PurchaseMapper.xml" />
+		<mapper resource="custom/mybatis/mapper/OrderMapper.xml" />
+	</mappers>
+
+</configuration>
+

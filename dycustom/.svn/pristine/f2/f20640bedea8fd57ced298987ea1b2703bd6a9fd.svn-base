@@ -1,0 +1,22 @@
+@charset "UTF-8";
+
+
+	span, .input-text-area, .btn-div{
+		
+		padding: 10px;
+		float:left;
+	}
+
+	span{
+		width: 20%;
+	}
+	.input-text-area{
+		width: 70%;
+	}
+	
+	.content-div{
+		float:left;
+		height: 100%;
+		width: 100%;
+	}
+	

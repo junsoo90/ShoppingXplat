@@ -1,0 +1,68 @@
+@charset "UTF-8";
+
+
+html,
+body {
+	margin:0;
+	padding:0;
+	height:100%;
+	width: 100%;
+}
+
+
+.custom-content-div{
+	float:left;
+	height: 70%;
+}
+
+.form-div{
+	margin-left: 20%;
+	margin-right: 20%;
+	
+	float: left;
+	height: 100%;
+}
+
+.insert-div{
+	padding: 5%;
+	float:left;
+}
+
+
+span, .form-group{
+	padding-right: 15px;
+	float:left;
+}
+
+.span-div{
+	width:20%;
+}
+
+.form-group{
+	width:50%;
+}
+
+.insert-data{
+	float:left;
+	width: 100%;
+	padding-bottom: 10px;
+}
+
+.btn-div{
+	padding-left: 10%;
+	float:left;
+}
+
+
+.nav-div{
+	 height:100px; 
+}
+
+
+.footer-div {
+	width:100%;
+	height:100px;
+	bottom:0;
+	float:left;
+}
+

@@ -1,0 +1,62 @@
+@charset "UTF-8";
+
+
+.login-div{
+	min-height:100%;
+	position:relative;
+}
+
+.login-main-div{
+	margin-left: 30%;	
+	align-content: center;
+  	width: 80%;
+}
+
+
+.input_area, input{
+	font-size: 20px;
+}
+
+.btn{
+	margin: 10px;
+	float: left;
+}
+
+
+h1{
+	margin: 10px;
+	floar: left;
+}
+
+
+.nav-div{
+	 height:100px; 
+}
+
+.footer-div { 
+	width:100%;
+	height:100px;
+	bottom:0;
+	float:left;
+}
+
+
+	span, .input-text-area, .btn-div{
+		
+		padding: 10px;
+		float:left;
+	}
+
+	span{
+		width: 20%;
+	}
+	.input-text-area{
+		width: 70%;
+	}
+	
+	.content-div{
+		float:left;
+		height: 100%;
+		width: 100%;
+	}
+	

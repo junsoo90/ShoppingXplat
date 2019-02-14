@@ -1,0 +1,68 @@
+@charset "UTF-8";
+
+.order-div{
+	min-height:100%;
+	position:relative;
+}
+
+.ordertable-date{
+	width: 20%;
+}
+
+.ordertable-product{
+	width: 40%;
+}
+
+.ordertable-cnt{
+	width: 5%;
+}
+.ordertable-state, .ordertable-confirm{
+	width: 10%;
+}
+.ordertable-pricez{
+	width: 15%;
+}
+
+.order-form-div{
+	float: left;
+	margin-left: 20%;
+	margin-right: 20%;
+	margin-top: 10px;
+	margin-bottom: 10%;
+}
+.ordercnt-div{
+	float: right;
+	width: 100%;
+}
+
+.order-product-div{
+	float: left;	
+	width: 100%;
+}
+
+.select-image{
+	width: 30%;
+	float: left;
+}
+.select-option{
+	width: 70%;
+	float: left;
+}
+
+table{
+	text-align: center;
+}
+
+
+.nav-div{
+	 height:100px; 
+}
+
+
+.footer-div {
+	width:100%;
+	height:100px;
+	bottom:0;
+	float:left;
+}
+
